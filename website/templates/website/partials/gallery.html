@@ -1,0 +1,19 @@
+{% load static %}{% if gallery %}
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Gallery</span>
+      <h2>From the mill floor</h2>
+      <p>Plants, machinery and sites from our work.</p>
+    </div>
+    <div class="gallery-grid">
+      {% for g in gallery %}
+      <figure class="gallery-item reveal">
+        <a href="{% static g.path %}" target="_blank" rel="noopener"><img src="{% static g.path %}" alt="{{ g.caption }}" loading="lazy"></a>
+        <figcaption>{{ g.caption }}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,264 @@
+{% extends "website/base.html" %}
+
+{% block title %}Flour Mills in India | {{ site.name }}{% endblock %}
+{% block meta_description %}A guide to the Indian flour milling industry: wheat production, roller flour mills, the milling process, products, machinery, FSSAI compliance and trends.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow-light">Industry guide</span>
+    <h1>Flour Mills in India</h1>
+    <p class="lead">How wheat becomes atta, maida and suji. A practical overview of the Indian flour milling industry for entrepreneurs, investors and mill owners.</p>
+    <nav class="pill-nav" aria-label="On this page">
+      <a href="#overview">Overview</a>
+      <a href="#grain">Wheat grain</a>
+      <a href="#process">Milling process</a>
+      <a href="#products">Products</a>
+      <a href="#calculator">Yield calculator</a>
+      <a href="#plants">Plant types</a>
+      <a href="#machinery">Machinery</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#trends">Trends</a>
+    </nav>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section" id="overview">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Overview</span>
+      <h2>A huge market that is still growing</h2>
+      <p>Wheat is a staple across north, central and eastern India. Most families eat roti or chapati every day, and bakeries, biscuit makers and food processors need maida and suji in large volumes.</p>
+    </div>
+    <div class="fact-grid">
+      {% for f in india_facts %}
+      <div class="fact reveal">
+        <span class="fact-value">{{ f.value }}</span>
+        <span class="fact-label">{{ f.label }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="note">Figures are approximate industry estimates and change from season to season. Check current numbers with government and industry sources before investing.</p>
+
+    <div class="split split-top">
+      <div class="reveal">
+        <h3>Where the wheat comes from</h3>
+        <p class="muted">Most of India's wheat is grown in the northern and central plains. Mills near these belts save on freight, while mills in the east and south serve large consumer markets.</p>
+        <div class="chip-row">
+          {% for s in wheat_states %}<span class="chip">{{ s }}</span>{% endfor %}
+        </div>
+      </div>
+      <div class="reveal">
+        <h3>Organised vs. traditional milling</h3>
+        <p class="muted">Roller flour mills make most of the country's maida and suji and a growing share of packaged atta. Traditional chakkis, from neighbourhood mills to large industrial chakki plants, still grind most of the wheat eaten as atta. As consumers move to branded and packaged flour, more of this volume is shifting to organised mills.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAIN -->
+<section class="section section-tint" id="grain">
+  <div class="container split">
+    <div class="grain-visual reveal">
+      {% include "website/partials/grain.html" %}
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Inside the grain</span>
+      <h2>Anatomy of a wheat kernel</h2>
+      <p class="muted">Milling separates the three parts of the kernel as cleanly as possible. The better the separation, the higher the extraction and the whiter the flour.</p>
+      <ol class="grain-legend">
+        {% for g in grain_parts %}
+        <li>
+          <span class="gl-num">{{ g.num }}</span>
+          <div><strong>{{ g.name }} <em>{{ g.share }}</em></strong><span>{{ g.desc }}</span></div>
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="note note-left">Shares are approximate, by weight of the kernel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>The roller flour milling process</h2>
+      <p>A modern roller mill works by gradual reduction. The grain is opened and ground in many small steps, so endosperm separates cleanly from bran.</p>
+    </div>
+    <div class="flow-strip reveal" aria-label="Flour milling process overview">
+      {% for f in flow_strip %}
+      <div class="flow-node"><span class="flow-icon">{% include "website/partials/icon.html" with name=f.icon %}</span><span>{{ f.label }}</span></div>
+      {% if not forloop.last %}<span class="flow-arrow" aria-hidden="true">{% include "website/partials/icon.html" with name="arrow" %}</span>{% endif %}
+      {% endfor %}
+    </div>
+    <ol class="steps">
+      {% for s in steps %}
+      <li class="step reveal">
+        <span class="step-num">{{ forloop.counter }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.desc }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section section-tint" id="products">
+  <div class="container">
+    <div class="split products-head">
+      <div class="reveal">
+        <span class="eyebrow">Output</span>
+        <h2>What Indian flour mills produce</h2>
+        <p class="muted">One tonne of wheat becomes several products. The mix you aim for (more maida, more atta, or a balance) shapes your flow sheet, machinery and margins.</p>
+      </div>
+      <div class="sacks-visual reveal">{% include "website/partials/sacks.html" %}</div>
+    </div>
+    <div class="card-grid card-grid-3">
+      {% for p in products %}
+      <article class="service-card reveal">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="package" %}</div>
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Interactive tool</span>
+      <h2>Flour Yield Calculator</h2>
+      <p>Estimate daily and monthly output from your mill's wheat grinding capacity. Adjust the product split to match your flow.</p>
+    </div>
+    <div class="calc reveal" id="calc">
+      <form class="calc-inputs" onsubmit="return false">
+        <div class="calc-row">
+          <div class="field">
+            <label for="calcTpd">Wheat milled per day (TPD)</label>
+            <input type="number" id="calcTpd" value="150" min="1" max="5000" step="1">
+          </div>
+          <div class="field">
+            <label for="calcDays">Running days per month</label>
+            <input type="number" id="calcDays" value="26" min="1" max="31" step="1">
+          </div>
+        </div>
+        <h3 class="calc-sub">Product split (% of wheat)</h3>
+        {% for c in calc_defaults %}
+        <div class="calc-slider">
+          <label for="pct_{{ c.key }}">{{ c.label }}</label>
+          <input type="range" id="pct_{{ c.key }}" data-key="{{ c.key }}" data-label="{{ c.label }}" min="0" max="80" step="0.5" value="{{ c.pct }}">
+          <output for="pct_{{ c.key }}">{{ c.pct }}%</output>
+        </div>
+        {% endfor %}
+        <div class="calc-total" id="calcTotal" role="status"></div>
+        <button type="button" class="btn btn-outline btn-sm" id="calcReset">Reset to typical values</button>
+      </form>
+      <div class="calc-results">
+        <div class="calc-headline">
+          <span>Total flour output</span>
+          <strong id="calcFlour">–</strong>
+          <small>maida + suji + atta, per day</small>
+        </div>
+        <div class="calc-bars" id="calcBars"></div>
+        <table class="calc-table">
+          <thead><tr><th>Product</th><th>Per day</th><th>Per month</th></tr></thead>
+          <tbody id="calcBody"></tbody>
+        </table>
+        <p class="note note-left">These are indicative figures for a typical Indian roller flour mill. Real output depends on wheat quality, conditioning, flow sheet and mill condition. <a href="{% url 'contact' %}?service=performance">Ask us for a mill audit</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANT TYPES -->
+<section class="section section-tint" id="plants">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Choosing a plant</span>
+      <h2>Types of flour milling plants</h2>
+    </div>
+    <div class="card-grid card-grid-2">
+      {% for p in plant_types %}
+      <article class="plant-card reveal">
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- MACHINERY -->
+<section class="section" id="machinery">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">Equipment</span>
+      <h2>Key machinery in a roller flour mill</h2>
+      <p class="muted">Choosing machines and sizing each section correctly decides your extraction, power use and flour quality for years. Getting the flow sheet right before you buy is the most important early step.</p>
+      <a href="{% url 'contact' %}?service=flow_design" class="btn btn-primary">Get help with your flow sheet {% include "website/partials/icon.html" with name="arrow" %}</a>
+    </div>
+    <ul class="machine-list reveal">
+      {% for m in machinery %}
+      <li>{% include "website/partials/icon.html" with name="wrench" %} {{ m }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="section section-tint" id="compliance">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Regulations</span>
+      <h2>Licences &amp; compliance</h2>
+      <p>The main approvals a flour mill in India needs. Requirements vary by state and change over time, so check current rules with the authorities.</p>
+    </div>
+    <div class="card-grid card-grid-2">
+      {% for c in compliance %}
+      <article class="plant-card reveal">
+        <h3>{% include "website/partials/icon.html" with name="shield" %} {{ c.title }}</h3>
+        <p>{{ c.desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- TRENDS -->
+<section class="section" id="trends">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Outlook</span>
+      <h2>Trends shaping Indian flour milling</h2>
+    </div>
+    <div class="card-grid card-grid-2">
+      {% for t in trends %}
+      <article class="service-card reveal">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="trend" %}</div>
+        <h3>{{ t.title }}</h3>
+        <p>{{ t.desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-inner reveal">
+    <div>
+      <h2>Thinking of starting a flour mill?</h2>
+      <p>Get advice on capacity, location, machinery and flow design from an experienced Chief Miller.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="{% url 'contact' %}?service=new_plant" class="btn btn-white">Discuss Your Project {% include "website/partials/icon.html" with name="arrow" %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

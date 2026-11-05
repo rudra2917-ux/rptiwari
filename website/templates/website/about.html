@@ -1,0 +1,201 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}About Us | {{ site.name }}{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-art">
+  <div class="container page-hero-grid">
+    <div>
+      <span class="eyebrow eyebrow-light">About Us</span>
+      <h1>Experience you can build a mill on</h1>
+      <p class="lead">R.P. Consultant &amp; Engineers (RPCE) is a flour milling consultancy founded by {{ site.founder }}, a Technical Consultant with {{ site.experience_years }} years in the industry.</p>
+    </div>
+    <img class="page-hero-img" src="{% static 'website/img/mill-scene.svg' %}" alt="" width="600" height="440">
+  </div>
+</section>
+
+<!-- COMPANY -->
+<section class="section">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">Who we are</span>
+      <h2>R.P. Consultant &amp; Engineers</h2>
+      <p>RPCE is a <strong>flour milling consultancy</strong>{% if site.established %} established in {{ site.established }}{% endif %}. We help entrepreneurs, investors and existing mill owners plan, set up, commission and run roller flour mills, chakki atta plants and allied units such as sattu plants.</p>
+      <p>Our approach is practical. Every recommendation comes from years of running mills: managing shifts, setting rolls, balancing flow sheets and meeting production targets on Buhler and Indian-make machinery.</p>
+      <p>Our goal is simple: <strong>higher extraction, consistent flour quality and lower running costs</strong> for every mill we work with.</p>
+    </div>
+    <div class="about-panel reveal">
+      <div class="about-panel-item">
+        {% include "website/partials/icon.html" with name="factory" %}
+        <div><strong>Mill types</strong><span>Roller flour mills, chakki atta plants, sattu plants</span></div>
+      </div>
+      <div class="about-panel-item">
+        {% include "website/partials/icon.html" with name="wrench" %}
+        <div><strong>Machinery</strong><span>Buhler (incl. PLC systems) and Indian-make plants</span></div>
+      </div>
+      <div class="about-panel-item">
+        {% include "website/partials/icon.html" with name="map" %}
+        <div><strong>Regions worked</strong><span>Assam, West Bengal, Odisha, and now consulting from Varanasi, UP</span></div>
+      </div>
+      <div class="about-panel-item">
+        {% include "website/partials/icon.html" with name="trend" %}
+        <div><strong>Capacity handled</strong><span>150 TPD to 400 TPD combined plants</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="section section-tint">
+  <div class="container">
+    <div class="founder-profile reveal">
+      <div class="founder-side">
+        <div class="avatar avatar-lg" aria-hidden="true">RP</div>
+        <h3>{{ site.founder_full }}</h3>
+        <p class="role">{{ site.founder_title }} &amp; Founder</p>
+        <div class="badge-row">
+          <span class="badge">F.M. Tech</span>
+          <span class="badge">I.S.M.T.</span>
+          <span class="badge">C.F.T.R.I. Mysore</span>
+        </div>
+        <a href="tel:{{ site.phone_raw }}" class="btn btn-primary btn-block">{% include "website/partials/icon.html" with name="phone" %} {{ site.phone_display }}</a>
+        <a href="mailto:{{ site.email }}" class="btn btn-outline btn-block">{% include "website/partials/icon.html" with name="mail" %} Email</a>
+      </div>
+      <div class="founder-main">
+        <span class="eyebrow">Meet the founder</span>
+        <h2>{{ site.founder }}</h2>
+        <p>{{ site.founder }} trained in flour milling at the <strong>International School of Milling Technology (ISMT)</strong> at the <strong>Central Food Technological Research Institute (CFTRI), Mysore</strong>, and earned the Certificate in Flour Milling Technology (1999–2000). During training he won <strong>1st prize</strong> for plant training at Brindavan Roller Flour Mills Ltd., Mysore.</p>
+        <p>He started as an Assistant Miller and rose to <strong>Chief Miller</strong>. Since November 2016 he has led a 200 TPD Buhler mill and a 200 TPD Indian mill at Eastern Foods Pvt. Ltd., Cuttack. He is known for motivated leadership, strong communication with teams on the floor, and working well both independently and with others.</p>
+
+        <div class="qual-grid">
+          <div class="qual">
+            {% include "website/partials/icon.html" with name="book" %}
+            <div><strong>Technical qualification</strong><span>Certificate in Flour Milling Technology, ISMT, CFTRI Mysore (29.09.1999 – 14.07.2000)</span></div>
+          </div>
+          <div class="qual">
+            {% include "website/partials/icon.html" with name="award" %}
+            <div><strong>Plant training: 1st prize</strong><span>Brindavan Roller Flour Mills Ltd., Mysore</span></div>
+          </div>
+          <div class="qual">
+            {% include "website/partials/icon.html" with name="book" %}
+            <div><strong>Educational qualification</strong><span>M.A. (Sociology)</span></div>
+          </div>
+          <div class="qual">
+            {% include "website/partials/icon.html" with name="users" %}
+            <div><strong>Languages</strong><span>Hindi &amp; English</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND -->
+<section class="section">
+  <div class="container brand-story reveal">
+    <div class="brand-logo-box">
+      {% include "website/partials/logo.html" with uid="about" large=True %}
+    </div>
+    <div>
+      <span class="eyebrow">Our identity</span>
+      <h2>What our logo stands for</h2>
+      <ul class="brand-meaning">
+        <li><span class="bm-dot"></span><div><strong>The gear</strong><span>Engineering: machinery, erection and the mechanics of a running plant.</span></div></li>
+        <li><span class="bm-dot"></span><div><strong>The wheat ear</strong><span>Flour milling: the grain at the centre of everything we do.</span></div></li>
+        <li><span class="bm-dot"></span><div><strong>RP</strong><span>Our founder, {{ site.founder }}, who stands behind every piece of advice.</span></div></li>
+        <li><span class="bm-dot"></span><div><strong>Red &amp; white</strong><span>Energy and commitment, with the purity of good white flour.</span></div></li>
+      </ul>
+      <div class="btn-row-left">
+        <a href="{% static 'website/img/logo-full.svg' %}" download class="btn btn-outline btn-sm">Download logo</a>
+        <a href="{% static 'website/img/logo.svg' %}" download class="btn btn-outline btn-sm">Download emblem</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Professional experience</span>
+      <h2>{{ site.experience_years }} years in the flour milling sector</h2>
+      <p>A career spent running mills of increasing size and complexity across eastern India.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="exp-table">
+        <thead>
+          <tr><th>Flour Mill</th><th>Position</th><th>Duration</th><th>Capacity</th></tr>
+        </thead>
+        <tbody>
+          {% for e in experience %}
+          <tr>
+            <td data-label="Flour Mill"><strong>{{ e.company }}</strong><span class="cell-sub">{{ e.location }}</span></td>
+            <td data-label="Position"><span class="pill{% if e.current %} pill-red{% endif %}">{{ e.position }}</span></td>
+            <td data-label="Duration">{{ e.duration }}</td>
+            <td data-label="Capacity">{{ e.capacity }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING TRIPS -->
+<section class="section section-tint">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow">Industry exposure</span>
+      <h2>Training trips</h2>
+      <p class="muted">As part of the CFTRI programme, he made study visits to leading food processing and milling machinery companies.</p>
+    </div>
+    <ul class="trip-list reveal">
+      {% for t in training_trips %}
+      <li>{% include "website/partials/icon.html" with name="check" %} {{ t }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our commitment</span>
+      <h2>How we work</h2>
+    </div>
+    <div class="card-grid card-grid-3">
+      <article class="service-card reveal">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="shield" %}</div>
+        <h3>Honest advice</h3>
+        <p>Recommendations based on what your mill needs, not on selling machinery.</p>
+      </article>
+      <article class="service-card reveal">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="clock" %}</div>
+        <h3>On-site, hands-on</h3>
+        <p>We work on your mill floor with your team until results show.</p>
+      </article>
+      <article class="service-card reveal">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="trend" %}</div>
+        <h3>Measurable results</h3>
+        <p>We track extraction, power per tonne, capacity and flour quality.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% include "website/partials/gallery.html" %}
+
+<section class="cta-band">
+  <div class="container cta-inner reveal">
+    <div>
+      <h2>Let's discuss your flour mill</h2>
+      <p>Share your requirement and we'll get back to you.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="{% url 'contact' %}" class="btn btn-white">Contact Us {% include "website/partials/icon.html" with name="arrow" %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

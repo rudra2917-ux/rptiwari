@@ -1,0 +1,108 @@
+{% load static %}<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.name }} | {{ site.tagline }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ site.name }}: flour milling consultancy by {{ site.founder }} (ISMT, CFTRI Mysore). Roller flour mill setup, flow design, commissioning and performance improvement.{% endblock %}">
+  <meta name="theme-color" content="#c8102e">
+  <link rel="icon" type="image/svg+xml" href="{% static 'website/img/logo.svg' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>{% include "website/partials/icon.html" with name="pin" %} {{ site.city }}</span>
+      <span class="topbar-links">
+        <a href="tel:{{ site.phone_raw }}">{% include "website/partials/icon.html" with name="phone" %} {{ site.phone_display }}</a>
+        <a href="mailto:{{ site.email }}" class="hide-sm">{% include "website/partials/icon.html" with name="mail" %} {{ site.email }}</a>
+      </span>
+    </div>
+  </div>
+
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="{% url 'home' %}" class="brand" aria-label="{{ site.name }} home">
+        {% include "website/partials/logo.html" with uid="nav" %}
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMenu">
+        {% include "website/partials/icon.html" with name="menu" %}
+      </button>
+      <nav class="nav-menu" id="navMenu">
+        <a href="{% url 'home' %}" class="{% if active == 'home' %}active{% endif %}">Home</a>
+        <a href="{% url 'about' %}" class="{% if active == 'about' %}active{% endif %}">About Us</a>
+        <a href="{% url 'services' %}" class="{% if active == 'services' %}active{% endif %}">Services</a>
+        <a href="{% url 'flour_mills' %}" class="{% if active == 'flour_mills' %}active{% endif %}">Flour Mills in India</a>
+        <a href="{% url 'contact' %}" class="{% if active == 'contact' %}active{% endif %}">Contact Us</a>
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-sm nav-cta">Get a Consultation</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="{% url 'home' %}" class="brand" aria-label="{{ site.name }} home">
+          {% include "website/partials/logo.html" with uid="foot" light=True %}
+        </a>
+        <p class="footer-about">Flour milling consultancy led by {{ site.founder }}, {{ site.founder_title }}. Trained at ISMT, CFTRI Mysore, with {{ site.experience_years }} years running roller flour mills across India.</p>
+        <div class="footer-social">
+          <a href="tel:{{ site.phone_raw }}" aria-label="Call">{% include "website/partials/icon.html" with name="phone" %}</a>
+          <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% include "website/partials/icon.html" with name="chat" %}</a>
+          <a href="mailto:{{ site.email }}" aria-label="Email">{% include "website/partials/icon.html" with name="mail" %}</a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About Us</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'flour_mills' %}">Flour Mills in India</a></li>
+          <li><a href="{% url 'flour_mills' %}#calculator">Flour Yield Calculator</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="{% url 'services' %}#new_plant">New Flour Mill Setup</a></li>
+          <li><a href="{% url 'services' %}#flow_design">Mill Flow Design</a></li>
+          <li><a href="{% url 'services' %}#commissioning">Erection &amp; Commissioning</a></li>
+          <li><a href="{% url 'services' %}#performance">Performance Improvement</a></li>
+          <li><a href="{% url 'services' %}#chakki_sattu">Chakki &amp; Sattu Plants</a></li>
+          <li><a href="{% url 'services' %}#training">Staff Training</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in Touch</h4>
+        <ul class="footer-contact">
+          <li>{% include "website/partials/icon.html" with name="phone" %}<a href="tel:{{ site.phone_raw }}">{{ site.phone_display }}</a></li>
+          <li>{% include "website/partials/icon.html" with name="mail" %}<a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li>{% include "website/partials/icon.html" with name="pin" %}<span>{{ site.address }}</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">© <span id="year"></span> {{ site.name }}. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">{% include "website/partials/icon.html" with name="arrow" cls="rot-up" %}</button>
+  <a class="whatsapp-float" href="https://wa.me/{{ site.whatsapp }}?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20flour%20mill%20project." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    {% include "website/partials/icon.html" with name="chat" %}
+  </a>
+
+  <script src="{% static 'website/js/main.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

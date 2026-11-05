@@ -1,0 +1,218 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow eyebrow-light">{% include "website/partials/icon.html" with name="wheat" %} {{ site.tagline }}{% if site.established %} · Since {{ site.established }}{% endif %}</span>
+      <h1>Flour mills that run <span class="hl">better</span>, from day one.</h1>
+      <p class="lead">{{ site.name }} brings {{ site.experience_years }} years of shop-floor experience as Miller and Chief Miller in Buhler and Indian roller flour mills, chakki plants and sattu plants. We help you plan, build and run your mill.</p>
+      <div class="hero-actions">
+        <a href="{% url 'contact' %}" class="btn btn-white">Request a Consultation {% include "website/partials/icon.html" with name="arrow" %}</a>
+        <a href="{% url 'services' %}" class="btn btn-outline-light">Our Services</a>
+      </div>
+      <ul class="hero-points">
+        <li>{% include "website/partials/icon.html" with name="check" %} ISMT · CFTRI Mysore trained</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} Buhler &amp; Indian plants</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} PLC systems</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="hero-art">
+        <img src="{% static 'website/img/mill-scene.svg' %}" alt="Illustration of a flour mill with silos, mill building and wheat field" width="600" height="440">
+      </div>
+      <div class="float-chip chip-a">
+        <span class="chip-icon">{% include "website/partials/icon.html" with name="award" %}</span>
+        <span><strong>1st Prize</strong><small>Plant training, CFTRI</small></span>
+      </div>
+      <div class="float-chip chip-b">
+        <span class="chip-icon">{% include "website/partials/icon.html" with name="factory" %}</span>
+        <span><strong>400 TPD</strong><small>Largest plant run</small></span>
+      </div>
+    </div>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 C240 10 480 10 720 45 C960 80 1200 80 1440 40 L1440 90 L0 90Z" fill="#fff"/></svg>
+</section>
+
+<!-- STATS -->
+<section class="stats-strip">
+  <div class="container stats-grid">
+    {% for s in stats %}
+    <div class="stat reveal">
+      <span class="stat-value" data-count="{{ s.num }}" data-suffix="{{ s.suffix }}">{{ s.num }}{{ s.suffix }}</span>
+      <span class="stat-label">{{ s.label }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-label="Areas of expertise">
+  <div class="ticker-track">
+    {% for e in expertise %}<span>{% include "website/partials/icon.html" with name="wheat" %} {{ e }}</span>{% endfor %}
+    {% for e in expertise %}<span aria-hidden="true">{% include "website/partials/icon.html" with name="wheat" %} {{ e }}</span>{% endfor %}
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">What we do</span>
+      <h2>Consultancy for every stage of your flour mill</h2>
+      <p>From a new project on paper to an existing mill that needs better extraction, we work alongside your team on the floor.</p>
+    </div>
+    <div class="card-grid">
+      {% for s in services %}
+      <a class="service-card reveal" href="{% url 'services' %}#{{ s.slug }}">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name=s.icon %}</div>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.desc }}</p>
+        <span class="card-more">Learn more {% include "website/partials/icon.html" with name="arrow" %}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="section section-tint">
+  <div class="container split">
+    <aside class="founder-card reveal">
+      <div class="founder-head">
+        <div class="avatar" aria-hidden="true">RP</div>
+        <div>
+          <h3>{{ site.founder }}</h3>
+          <p>{{ site.founder_title }} &amp; Founder</p>
+        </div>
+      </div>
+      <ul class="cred-list">
+        <li>{% include "website/partials/icon.html" with name="book" %}<span><strong>F.M. Tech</strong>, International School of Milling Technology, CFTRI Mysore</span></li>
+        <li>{% include "website/partials/icon.html" with name="award" %}<span><strong>1st Prize</strong>, plant training at Brindavan Roller Flour Mills, Mysore</span></li>
+        <li>{% include "website/partials/icon.html" with name="factory" %}<span><strong>Chief Miller</strong> at 200 + 200 TPD Buhler &amp; Indian plants</span></li>
+        <li>{% include "website/partials/icon.html" with name="shield" %}<span>Experienced with <strong>PLC-controlled</strong> Buhler systems</span></li>
+      </ul>
+      <a href="{% url 'about' %}" class="link-arrow">Read full profile {% include "website/partials/icon.html" with name="arrow" %}</a>
+    </aside>
+    <div class="reveal">
+      <span class="eyebrow">Meet the founder</span>
+      <h2>Advice from someone who has run the mill</h2>
+      <p class="muted">{{ site.founder }} has spent his whole career on the milling floor, starting as Assistant Miller and rising to Chief Miller of large Buhler and Indian plants. Every recommendation is tested against what works on a running plant.</p>
+      <ul class="check-list">
+        <li>{% include "website/partials/icon.html" with name="check" %} Formal training at ISMT, CFTRI Mysore, a leading milling school in India</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} Hands-on with both <strong>Buhler</strong> and <strong>Indian-make</strong> machinery</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} Roller flour mills, chakki atta plants and sattu plants under one roof</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} Worked across Assam, West Bengal and Odisha</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">How we work</span>
+      <h2>A simple, four-step consulting process</h2>
+    </div>
+    <ol class="process">
+      {% for p in process %}
+      <li class="process-step reveal">
+        <div class="process-icon">{% include "website/partials/icon.html" with name=p.icon %}<span>{{ forloop.counter }}</span></div>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.desc }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<!-- CAREER + MACHINE -->
+<section class="section section-dark">
+  <div class="container split">
+    <div class="reveal">
+      <span class="eyebrow eyebrow-light">Career journey</span>
+      <h2>From Assistant Miller to Chief Miller</h2>
+      <p class="muted-light">Running mills of increasing size and complexity across eastern India, from 150 TPD plants to a combined 400 TPD operation.</p>
+      <ol class="timeline timeline-dark">
+        {% for e in experience %}
+        <li class="{% if e.current %}is-current{% endif %}">
+          <span class="tl-dot"></span>
+          <div>
+            <span class="tl-meta">{{ e.position }} · {{ e.duration }}</span>
+            <strong>{{ e.company }}</strong>
+            <span class="tl-sub">{{ e.location }} · {{ e.capacity }}</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    <div class="machine-visual reveal">
+      <img src="{% static 'website/img/rollermill.svg' %}" alt="Illustration of a roller mill with hopper, grinding rolls and motor" width="400" height="320" loading="lazy">
+      <p class="machine-caption">The rollermill is the heart of every flour mill. Roll condition and settings decide your extraction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INDIA TEASER -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Industry insight</span>
+      <h2>Flour milling in India</h2>
+      <p>India grows more wheat than almost any other country, yet most of it is still ground outside the organised milling sector. That leaves plenty of room for well-run modern mills.</p>
+    </div>
+    <div class="flow-strip reveal" aria-label="Flour milling process overview">
+      {% for f in flow_strip %}
+      <div class="flow-node"><span class="flow-icon">{% include "website/partials/icon.html" with name=f.icon %}</span><span>{{ f.label }}</span></div>
+      {% if not forloop.last %}<span class="flow-arrow" aria-hidden="true">{% include "website/partials/icon.html" with name="arrow" %}</span>{% endif %}
+      {% endfor %}
+    </div>
+    <div class="fact-grid">
+      {% for f in india_facts %}
+      <div class="fact reveal">
+        <span class="fact-value">{{ f.value }}</span>
+        <span class="fact-label">{{ f.label }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="center reveal btn-row">
+      <a href="{% url 'flour_mills' %}" class="btn btn-outline">Explore the industry guide {% include "website/partials/icon.html" with name="arrow" %}</a>
+      <a href="{% url 'flour_mills' %}#calculator" class="btn btn-primary">Try the Flour Yield Calculator</a>
+    </div>
+  </div>
+</section>
+
+{% include "website/partials/gallery.html" %}
+
+<!-- FAQ -->
+<section class="section section-tint">
+  <div class="container split split-top">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions mill owners ask us</h2>
+      <p class="muted">Can't find your answer? Call or WhatsApp us. We're happy to talk through your project.</p>
+      <a href="{% url 'services' %}#faq" class="link-arrow">See all questions {% include "website/partials/icon.html" with name="arrow" %}</a>
+    </div>
+    {% include "website/partials/faq.html" %}
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container cta-inner reveal">
+    <div>
+      <h2>Planning a new flour mill or upgrading one?</h2>
+      <p>Talk to {{ site.founder }} directly about your capacity, budget and goals.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="tel:{{ site.phone_raw }}" class="btn btn-white">{% include "website/partials/icon.html" with name="phone" %} Call {{ site.phone_display }}</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline-light">Send an Enquiry</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

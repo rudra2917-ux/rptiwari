@@ -1,0 +1,70 @@
+{% extends "website/base.html" %}
+
+{% block title %}Contact Us | {{ site.name }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow-light">Contact Us</span>
+    <h1>Let's talk about your flour mill</h1>
+    <p class="lead">New project, upgrade or a production problem: send us the details and {{ site.founder }} will get back to you.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <a class="contact-card reveal" href="tel:{{ site.phone_raw }}">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="phone" %}</div>
+        <div><span class="label">Call us</span><strong>{{ site.phone_display }}</strong></div>
+      </a>
+      <a class="contact-card reveal" href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="chat" %}</div>
+        <div><span class="label">WhatsApp</span><strong>Chat with us</strong></div>
+      </a>
+      <a class="contact-card reveal" href="mailto:{{ site.email }}">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="mail" %}</div>
+        <div><span class="label">Email</span><strong>{{ site.email }}</strong></div>
+      </a>
+      <div class="contact-card reveal">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="pin" %}</div>
+        <div><span class="label">Address</span><strong>{{ site.address }}</strong></div>
+      </div>
+      <div class="next-steps reveal">
+        <h3>What happens next?</h3>
+        <ol>
+          <li><span>1</span> We review your enquiry and plant details.</li>
+          <li><span>2</span> {{ site.founder }} calls or messages you to understand your needs.</li>
+          <li><span>3</span> We suggest a clear plan, whether a site visit, design work or an audit.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="form-card reveal">
+      <h2>Send an enquiry</h2>
+      <p class="muted">Fields marked * are required.</p>
+
+      {% if messages %}
+        {% for m in messages %}
+        <div class="alert alert-success" role="status">{% include "website/partials/icon.html" with name="check" %} {{ m }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
+        <div class="form-grid">
+          {% for field in form %}
+          <div class="field{% if field.name == 'message' or field.name == 'service' or field.name == 'preferred_contact' %} field-full{% endif %}{% if field.errors %} has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+            {{ field }}
+            {% for err in field.errors %}<span class="field-error">{{ err }}</span>{% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send Enquiry {% include "website/partials/icon.html" with name="arrow" %}</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
