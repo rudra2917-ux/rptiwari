@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+# Local database and collected static files are created on the server, not committed
+db.sqlite3
+staticfiles/
+.env
+.venv/
+venv/

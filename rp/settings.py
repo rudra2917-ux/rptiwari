@@ -10,22 +10,71 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+def env_bool(name, default):
+    value = os.environ.get(name)
+    return default if value is None else value.strip().lower() in ('1', 'true', 'yes', 'on')
+
+
+def env_list(name):
+    return [v.strip() for v in os.environ.get(name, '').split(',') if v.strip()]
+
+
+# Running on Railway? (Railway sets these for every deployment.)
+ON_RAILWAY = bool(os.environ.get('RAILWAY_ENVIRONMENT') or os.environ.get('RAILWAY_PROJECT_ID'))
+
+# Debug is on locally and off on Railway, unless DJANGO_DEBUG says otherwise.
+DEBUG = env_bool('DJANGO_DEBUG', default=not ON_RAILWAY)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(0s3gbmgz#!&_yg+mdwh63%(%226-oqznwe#dohgu&t((3q2w+'
+# In production set DJANGO_SECRET_KEY in the Railway service variables.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured(
+            'DJANGO_SECRET_KEY is not set. Add it in Railway > your service > Variables.'
+        )
+    SECRET_KEY = 'django-insecure-local-development-only-not-for-production'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ALLOWED_HOSTS = [
+    '127.0.0.1', 'localhost',
+    '.up.railway.app',           # Railway generated domains
+    'healthcheck.railway.app',   # Railway health checks
+    'rpconsultant.online', '.rpconsultant.online',
+]
+if os.environ.get('RAILWAY_PUBLIC_DOMAIN'):
+    ALLOWED_HOSTS.append(os.environ['RAILWAY_PUBLIC_DOMAIN'])
+ALLOWED_HOSTS += env_list('DJANGO_ALLOWED_HOSTS')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# Forms (contact form, admin login) posted over HTTPS from these origins.
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.up.railway.app',
+    'https://rpconsultant.online', 'https://*.rpconsultant.online',
+] + [f'https://{h.lstrip(".")}' for h in env_list('DJANGO_ALLOWED_HOSTS')]
+if os.environ.get('RAILWAY_PUBLIC_DOMAIN'):
+    CSRF_TRUSTED_ORIGINS.append(f"https://{os.environ['RAILWAY_PUBLIC_DOMAIN']}")
+
+# Railway terminates HTTPS at its proxy and forwards plain HTTP.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+
+# W008: Railway's edge already redirects HTTP to HTTPS; redirecting here too would
+#       break Railway's internal (plain HTTP) health check.
+# W004: HSTS is left off until the custom domain is final, as browsers cache it.
+SILENCED_SYSTEM_CHECKS = ['security.W004', 'security.W008']
 
 
 # Application definition
@@ -42,6 +91,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # serves CSS/JS/images in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,11 +124,13 @@ WSGI_APPLICATION = 'rp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Uses DATABASE_URL when set (e.g. a Railway Postgres service), otherwise local SQLite.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -118,6 +170,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STORAGES = {
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {
+        # Compressed, cache-busted file names in production; plain storage locally.
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage' if DEBUG
+        else 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
