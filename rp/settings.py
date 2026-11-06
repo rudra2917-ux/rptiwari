@@ -58,15 +58,22 @@ if os.environ.get('RAILWAY_PUBLIC_DOMAIN'):
 # Railway terminates HTTPS at its proxy and forwards plain HTTP.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 if not DEBUG:
+    # HTTPS everywhere in production: cookies only over HTTPS, and browsers are told
+    # (HSTS) to use HTTPS for this site for a year. HTTP visitors are redirected by
+    # website.middleware.ForceHttpsMiddleware.
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False  # leave other rpconsultant.online subdomains unaffected
+    SECURE_HSTS_PRELOAD = False
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
-# W008: Railway's edge already redirects HTTP to HTTPS; redirecting here too would
-#       break Railway's internal (plain HTTP) health check.
-# W004: HSTS is left off until the custom domain is final, as browsers cache it.
-SILENCED_SYSTEM_CHECKS = ['security.W004', 'security.W008']
+# W008: the HTTP->HTTPS redirect is done by ForceHttpsMiddleware instead of
+#       SECURE_SSL_REDIRECT, so Railway's internal plain-HTTP health check still works.
+# W005: HSTS deliberately not applied to subdomains.
+# W021: not submitting to the browser HSTS preload list (optional, hard to undo).
+SILENCED_SYSTEM_CHECKS = ['security.W005', 'security.W008', 'security.W021']
 
 
 # Application definition
@@ -83,6 +90,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'website.middleware.ForceHttpsMiddleware',     # http:// -> https:// behind Railway's proxy
     'whitenoise.middleware.WhiteNoiseMiddleware',  # serves CSS/JS/images in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
