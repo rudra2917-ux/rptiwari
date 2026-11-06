@@ -35,7 +35,7 @@ ON_RAILWAY = bool(os.environ.get('RAILWAY_ENVIRONMENT') or os.environ.get('RAILW
 DEBUG = env_bool('DJANGO_DEBUG', default=not ON_RAILWAY)
 
 # Hard-coded secret key. A DJANGO_SECRET_KEY variable in Railway, if set, takes precedence.
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY') or '&hGCRh9Tv7LHv^fWjppQG(1XOYU)lrSHxRhj@bwbxqdp+unef%afyEEPmgeTD1*O'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY') or 'django-insecure-(0s3gbmgz#!&_yg+mdwh63%(%226-oqznwe#dohgu&t((3q2w+'
 
 ALLOWED_HOSTS = [
     '127.0.0.1', 'localhost',
