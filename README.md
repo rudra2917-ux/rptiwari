@@ -52,9 +52,12 @@ folder with the card's name, and it replaces the illustration automatically:
 
 ## Deploy on Railway
 
-The repo is ready for [Railway](https://railway.com): `railway.json` sets the start command
-(migrate → collectstatic → gunicorn), and `requirements.txt` includes gunicorn, WhiteNoise
-(serves CSS/JS/images) and Postgres support.
+The repo is ready for [Railway](https://railway.com) via the `Procfile`:
+- `release`: runs migrations and `create_superadmin` (creates the admin login from variables).
+- `web`: runs migrations, collects static files, then starts gunicorn.
+
+`requirements.txt` includes gunicorn, WhiteNoise (serves CSS/JS/images) and Postgres support.
+Leave the **Custom Start Command** in Railway's service settings empty so the Procfile is used.
 
 1. No variables are required. The secret key is set in `rp/settings.py`. Optional variables
    (Railway → service → **Variables**):
@@ -64,6 +67,8 @@ The repo is ready for [Railway](https://railway.com): `railway.json` sets the st
 2. **Keep enquiries between deploys:** Railway's disk is wiped on every deploy, so the SQLite file does not
    persist. Add a **Postgres** database to the project and connect it to this service; Railway sets
    `DATABASE_URL` and the site uses it automatically.
-3. Create an admin login once: open the service's shell and run `python manage.py createsuperuser`.
+3. Admin login: set `DJANGO_SUPERUSER_PASSWORD` (and optionally `DJANGO_SUPERUSER_USERNAME`, default
+   `admin`, and `DJANGO_SUPERUSER_EMAIL`) in Variables. The next deploy creates the user; existing users
+   are never changed. Then sign in at `/admin/`.
 
 Debug mode is off automatically on Railway (set `DJANGO_DEBUG=true` only to troubleshoot).

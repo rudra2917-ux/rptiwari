@@ -166,11 +166,14 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
     'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
     'staticfiles': {
-        # Compressed, cache-busted file names in production; plain storage locally.
+        # Compressed files in production. No manifest, so pages never fail if
+        # collectstatic was skipped by a custom start command.
         'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage' if DEBUG
-        else 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        else 'whitenoise.storage.CompressedStaticFilesStorage',
     },
 }
+# Serve straight from the app's static folders when collectstatic hasn't run.
+WHITENOISE_USE_FINDERS = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
