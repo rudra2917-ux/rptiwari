@@ -1,19 +1,32 @@
 (function () {
   document.documentElement.classList.remove('no-js');
 
-  // Mobile menu toggle
+  // Mobile / tablet menu drawer
   var toggle = document.getElementById('navToggle');
   var menu = document.getElementById('navMenu');
+  var closeBtn = document.getElementById('navClose');
+  var backdrop = document.getElementById('navBackdrop');
+  function setMenu(open) {
+    if (!menu || !toggle) return;
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (backdrop) backdrop.hidden = !open;
+    if (open) {
+      var first = menu.querySelector('.nav-link');
+      if (first) setTimeout(function () { first.focus(); }, 50);
+    }
+  }
   if (toggle && menu) {
-    toggle.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+    if (closeBtn) closeBtn.addEventListener('click', function () { setMenu(false); toggle.focus(); });
+    if (backdrop) backdrop.addEventListener('click', function () { setMenu(false); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); toggle.focus(); }
     });
-    menu.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        menu.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 1100 && menu.classList.contains('open')) setMenu(false);
     });
   }
 
@@ -34,24 +47,61 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Reveal-on-scroll animation
+  var root = document.documentElement;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Image placeholders: shimmer on the frame until the photo arrives, then fade it in
+  document.querySelectorAll('main img').forEach(function (img) {
+    var frame = img.parentElement;
+    if (img.complete && img.naturalWidth) { img.classList.add('img-loaded'); return; }
+    img.classList.add('img-wait');
+    if (frame) frame.classList.add('img-loading');
+    function done() {
+      img.classList.add('img-loaded');
+      if (frame) frame.classList.remove('img-loading');
+    }
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  });
+
+  // Section entrances: pick a direction per element and stagger siblings
   var items = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    items.forEach(function (el) { io.observe(el); });
-  } else {
-    items.forEach(function (el) { el.classList.add('visible'); });
+  items.forEach(function (el) {
+    if (el.matches('.ind-card, .ff-item, .credit-item, .gallery-item, .fact, .stat, .core-card')) el.classList.add('reveal-zoom');
+    else if (el.matches('.ai-visual, .founder-card')) el.classList.add('reveal-left');
+    else if (el.matches('.hero-visual')) el.classList.add('reveal-right');
+    var sibs = el.parentElement ? Array.prototype.filter.call(el.parentElement.children, function (c) {
+      return c.classList.contains('reveal');
+    }) : [];
+    var i = sibs.indexOf(el);
+    if (sibs.length > 1 && i > 0) el.style.transitionDelay = Math.min(i, 7) * 80 + 'ms';
+  });
+
+  function show(el) {
+    el.classList.add('visible', 'in');
+    // Once the entrance has played, drop the reveal classes so the element's own
+    // hover transitions (card lifts, zooms) work at normal speed again.
+    var delay = parseFloat(el.style.transitionDelay) || 0;
+    setTimeout(function () {
+      el.classList.remove('reveal', 'reveal-zoom', 'reveal-left', 'reveal-right', 'visible');
+      el.style.transitionDelay = '';
+    }, 1000 + delay);
+  }
+  function startReveals() {
+    if ('IntersectionObserver' in window && !reduceMotion) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { show(entry.target); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      items.forEach(function (el) { el.classList.add('visible', 'in'); });
+    }
   }
 
   // Animated counters
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = reduceMotion;
   function runCounter(el) {
     var target = parseInt(el.getAttribute('data-count'), 10) || 0;
     var suffix = el.getAttribute('data-suffix') || '';
@@ -66,14 +116,60 @@
     requestAnimationFrame(tick);
   }
   var counters = document.querySelectorAll('[data-count]');
-  if ('IntersectionObserver' in window) {
-    var co = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { runCounter(e.target); co.unobserve(e.target); }
-      });
-    }, { threshold: 0.6 });
-    counters.forEach(function (el) { co.observe(el); });
+  function startCounters() {
+    if ('IntersectionObserver' in window) {
+      var co = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { runCounter(e.target); co.unobserve(e.target); }
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(function (el) { co.observe(el); });
+    }
   }
+
+  // Brand preloader (first page of a visit). Entrance animations start once it lifts,
+  // so the hero and counters animate in view instead of behind the curtain.
+  var preloader = document.getElementById('preloader');
+  var started = false;
+  function startAnimations() {
+    if (started) return; started = true;
+    root.classList.add('page-ready');
+    startReveals(); startCounters();
+  }
+  if (preloader && root.classList.contains('pl-active')) {
+    var t0 = (window.performance && performance.now) ? performance.now() : 0;
+    var lifted = false;
+    var lift = function () {
+      if (lifted) return; lifted = true;
+      try { sessionStorage.setItem('rpSeen', '1'); } catch (e) {}
+      var wait = Math.max(0, 1100 - ((window.performance && performance.now) ? performance.now() - t0 : 0));
+      setTimeout(function () {
+        preloader.classList.add('pl-done');
+        root.classList.remove('pl-active');
+        setTimeout(startAnimations, 250);
+        setTimeout(function () { if (preloader.parentNode) preloader.parentNode.removeChild(preloader); }, 1200);
+      }, wait);
+    };
+    if (document.readyState === 'complete') lift();
+    else window.addEventListener('load', lift);
+    setTimeout(lift, 3500); // never hold the page longer than this on slow connections
+  } else {
+    if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
+    startAnimations();
+  }
+
+  // Thin loading bar when moving to another page of the site
+  var navBar = document.getElementById('navProgress');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || !navBar || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+    if (!/^https?:$/.test(url.protocol)) return;
+    navBar.classList.add('loading');
+  });
+  window.addEventListener('pageshow', function () { if (navBar) navBar.classList.remove('loading'); });
 
   // Flour yield calculator
   var calc = document.getElementById('calc');
