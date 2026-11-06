@@ -56,10 +56,10 @@ The repo is ready for [Railway](https://railway.com): `railway.json` sets the st
 (migrate → collectstatic → gunicorn), and `requirements.txt` includes gunicorn, WhiteNoise
 (serves CSS/JS/images) and Postgres support.
 
-1. In Railway, open the service → **Variables** and add:
-   - `DJANGO_SECRET_KEY`: a long random string. Generate one with
-     `python -c "import secrets; print(secrets.token_urlsafe(50))"`. **Required**; the site refuses to start without it.
-   - `DJANGO_ALLOWED_HOSTS` (optional): extra domains, comma-separated. `*.up.railway.app` and
+1. No variables are required. The secret key is set in `rp/settings.py`. Optional variables
+   (Railway → service → **Variables**):
+   - `DJANGO_SECRET_KEY`: overrides the key in `settings.py`.
+   - `DJANGO_ALLOWED_HOSTS`: extra domains, comma-separated. `*.up.railway.app` and
      `rpconsultant.online` are already allowed.
 2. **Keep enquiries between deploys:** Railway's disk is wiped on every deploy, so the SQLite file does not
    persist. Add a **Postgres** database to the project and connect it to this service; Railway sets

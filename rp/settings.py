@@ -14,7 +14,6 @@ import os
 from pathlib import Path
 
 import dj_database_url
-from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,15 +34,8 @@ ON_RAILWAY = bool(os.environ.get('RAILWAY_ENVIRONMENT') or os.environ.get('RAILW
 # Debug is on locally and off on Railway, unless DJANGO_DEBUG says otherwise.
 DEBUG = env_bool('DJANGO_DEBUG', default=not ON_RAILWAY)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# In production set DJANGO_SECRET_KEY in the Railway service variables.
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
-if not SECRET_KEY:
-    if not DEBUG:
-        raise ImproperlyConfigured(
-            'DJANGO_SECRET_KEY is not set. Add it in Railway > your service > Variables.'
-        )
-    SECRET_KEY = 'django-insecure-local-development-only-not-for-production'
+# Hard-coded secret key. A DJANGO_SECRET_KEY variable in Railway, if set, takes precedence.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY') or '&hGCRh9Tv7LHv^fWjppQG(1XOYU)lrSHxRhj@bwbxqdp+unef%afyEEPmgeTD1*O'
 
 ALLOWED_HOSTS = [
     '127.0.0.1', 'localhost',
