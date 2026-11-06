@@ -1,0 +1,35 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Photo Credits | {{ site.name }}{% endblock %}
+{% block meta_description %}Credits and licences for the third-party photographs used on the {{ site.name }} website.{% endblock %}
+
+{% block content %}
+<section class="page-hero" style="--hero-img: url('{% static 'website/img/photos/wheat-ears.jpg' %}')">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Photo Credits</span></nav>
+    <span class="eyebrow eyebrow-light">Attribution</span>
+    <h1>Photo Credits</h1>
+    <p class="lead">Some industry photographs on this site come from Wikimedia Commons and are used under the licences listed below. We thank the photographers.</p>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 C240 10 480 10 720 45 C960 80 1200 80 1440 40 L1440 90 L0 90Z" fill="#fff"/></svg>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="credit-grid">
+      {% for c in credits %}
+      <figure class="credit-item reveal">
+        <img src="{% static c.image %}" alt="{{ c.label }}" loading="lazy">
+        <figcaption>
+          <strong>{{ c.label }}</strong>
+          <span>Photo: {{ c.author }}</span>
+          <span><a href="{{ c.license_url }}" target="_blank" rel="noopener license">{{ c.license }}</a> · <a href="{{ c.source }}" target="_blank" rel="noopener">Source</a></span>
+        </figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    <p class="photo-note">Images were resized and compressed for the web. CC BY-SA images remain available under the same licence.</p>
+  </div>
+</section>
+{% endblock %}

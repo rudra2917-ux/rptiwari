@@ -36,6 +36,14 @@ Then log in at http://127.0.0.1:8000/admin/ → **Enquiries**.
 Drop `.jpg` / `.png` / `.webp` photos into `website/static/website/img/gallery/`.
 A **Gallery** section appears automatically on the Home and About pages, and the file name becomes the caption.
 
+## Replacing plant-card illustrations with real photos
+The "Plants we specialise in" cards on the home page use illustrations from
+`website/static/website/img/industries/`. To use a real photo for a card, save it in that
+folder with the card's name, and it replaces the illustration automatically:
+
+`flour-mill`, `chakki-plant`, `sattu-plant`, `grain-storage`, `cleaning-section`,
+`milling-section`, `plansifter`, `plc-automation` (+ `.jpg`, `.png` or `.webp`)
+
 ## Editing content
 - Phone, email, address, founder name, established year → `website/context_processors.py`
 - Services, experience, flour-mill industry content → `website/data.py`

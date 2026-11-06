@@ -1,11 +1,13 @@
 {% extends "website/base.html" %}
+{% load static %}
 
 {% block title %}Flour Mills in India | {{ site.name }}{% endblock %}
 {% block meta_description %}A guide to the Indian flour milling industry: wheat production, roller flour mills, the milling process, products, machinery, FSSAI compliance and trends.{% endblock %}
 
 {% block content %}
-<section class="page-hero">
+<section class="page-hero" style="--hero-img: url('{% static 'website/img/photos/wheat-harvest-mp.jpg' %}')">
   <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Flour Mills in India</span></nav>
     <span class="eyebrow eyebrow-light">Industry guide</span>
     <h1>Flour Mills in India</h1>
     <p class="lead">How wheat becomes atta, maida and suji. A practical overview of the Indian flour milling industry for entrepreneurs, investors and mill owners.</p>
@@ -21,14 +23,15 @@
       <a href="#trends">Trends</a>
     </nav>
   </div>
+  <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 C240 10 480 10 720 45 C960 80 1200 80 1440 40 L1440 90 L0 90Z" fill="#fff"/></svg>
 </section>
 
 <!-- OVERVIEW -->
 <section class="section" id="overview">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Overview</span>
-      <h2>A huge market that is still growing</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Overview</span>
+      <h2 class="h-mixed">A huge market that is <strong>still growing</strong></h2>
       <p>Wheat is a staple across north, central and eastern India. Most families eat roti or chapati every day, and bakeries, biscuit makers and food processors need maida and suji in large volumes.</p>
     </div>
     <div class="fact-grid">
@@ -64,8 +67,8 @@
       {% include "website/partials/grain.html" %}
     </div>
     <div class="reveal">
-      <span class="eyebrow">Inside the grain</span>
-      <h2>Anatomy of a wheat kernel</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Inside the grain</span>
+      <h2 class="h-mixed">Anatomy of a <strong>wheat kernel</strong></h2>
       <p class="muted">Milling separates the three parts of the kernel as cleanly as possible. The better the separation, the higher the extraction and the whiter the flour.</p>
       <ol class="grain-legend">
         {% for g in grain_parts %}
@@ -84,8 +87,8 @@
 <section class="section" id="process">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">How it works</span>
-      <h2>The roller flour milling process</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} How it works</span>
+      <h2 class="h-mixed">The roller flour <strong>milling process</strong></h2>
       <p>A modern roller mill works by gradual reduction. The grain is opened and ground in many small steps, so endosperm separates cleanly from bran.</p>
     </div>
     <div class="flow-strip reveal" aria-label="Flour milling process overview">
@@ -111,8 +114,8 @@
   <div class="container">
     <div class="split products-head">
       <div class="reveal">
-        <span class="eyebrow">Output</span>
-        <h2>What Indian flour mills produce</h2>
+        <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Output</span>
+        <h2 class="h-mixed">What Indian flour mills <strong>produce</strong></h2>
         <p class="muted">One tonne of wheat becomes several products. The mix you aim for (more maida, more atta, or a balance) shapes your flow sheet, machinery and margins.</p>
       </div>
       <div class="sacks-visual reveal">{% include "website/partials/sacks.html" %}</div>
@@ -133,8 +136,8 @@
 <section class="section" id="calculator">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Interactive tool</span>
-      <h2>Flour Yield Calculator</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Interactive tool</span>
+      <h2 class="h-mixed">Flour yield <strong>calculator</strong></h2>
       <p>Estimate daily and monthly output from your mill's wheat grinding capacity. Adjust the product split to match your flow.</p>
     </div>
     <div class="calc reveal" id="calc">
@@ -181,8 +184,8 @@
 <section class="section section-tint" id="plants">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Choosing a plant</span>
-      <h2>Types of flour milling plants</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Choosing a plant</span>
+      <h2 class="h-mixed">Types of flour <strong>milling plants</strong></h2>
     </div>
     <div class="card-grid card-grid-2">
       {% for p in plant_types %}
@@ -199,8 +202,8 @@
 <section class="section" id="machinery">
   <div class="container split">
     <div class="reveal">
-      <span class="eyebrow">Equipment</span>
-      <h2>Key machinery in a roller flour mill</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Equipment</span>
+      <h2 class="h-mixed">Key machinery in a <strong>roller flour mill</strong></h2>
       <p class="muted">Choosing machines and sizing each section correctly decides your extraction, power use and flour quality for years. Getting the flow sheet right before you buy is the most important early step.</p>
       <a href="{% url 'contact' %}?service=flow_design" class="btn btn-primary">Get help with your flow sheet {% include "website/partials/icon.html" with name="arrow" %}</a>
     </div>
@@ -216,8 +219,8 @@
 <section class="section section-tint" id="compliance">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Regulations</span>
-      <h2>Licences &amp; compliance</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Regulations</span>
+      <h2 class="h-mixed">Licences <strong>&amp; compliance</strong></h2>
       <p>The main approvals a flour mill in India needs. Requirements vary by state and change over time, so check current rules with the authorities.</p>
     </div>
     <div class="card-grid card-grid-2">
@@ -235,8 +238,8 @@
 <section class="section" id="trends">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Outlook</span>
-      <h2>Trends shaping Indian flour milling</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Outlook</span>
+      <h2 class="h-mixed">Trends shaping <strong>Indian flour milling</strong></h2>
     </div>
     <div class="card-grid card-grid-2">
       {% for t in trends %}

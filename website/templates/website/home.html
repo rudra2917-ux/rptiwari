@@ -3,7 +3,7 @@
 
 {% block content %}
 <!-- HERO -->
-<section class="hero">
+<section class="hero" style="--hero-img: url('{% static 'website/img/photos/hero-silos.jpg' %}')">
   <div class="hero-grain" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy reveal">
@@ -58,30 +58,146 @@
   </div>
 </div>
 
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">What we do</span>
-      <h2>Consultancy for every stage of your flour mill</h2>
-      <p>From a new project on paper to an existing mill that needs better extraction, we work alongside your team on the floor.</p>
+<!-- ABOUT INTRO -->
+<section class="section about-intro">
+  <div class="container about-intro-grid">
+    <div class="ai-visual reveal">
+      <div class="ai-img ai-img-sm"><img src="{% static 'website/img/photos/plc-panel.jpg' %}" alt="Flour mill PLC operator panel" loading="lazy"></div>
+      <div class="ai-exp">
+        <strong data-count="24" data-suffix="+">24+</strong>
+        <span>Years of<br>Experience</span>
+      </div>
+      <div class="ai-img ai-img-lg"><img src="{% static 'website/img/photos/roller-mill.jpg' %}" alt="Buhler-system rollermill" loading="lazy"></div>
     </div>
-    <div class="card-grid">
-      {% for s in services %}
-      <a class="service-card reveal" href="{% url 'services' %}#{{ s.slug }}">
-        <div class="icon-badge">{% include "website/partials/icon.html" with name=s.icon %}</div>
-        <h3>{{ s.title }}</h3>
-        <p>{{ s.desc }}</p>
-        <span class="card-more">Learn more {% include "website/partials/icon.html" with name="arrow" %}</span>
+    <div class="reveal">
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} About us</span>
+      <h2 class="h-mixed">Reliable flour milling<br><strong>consultancy &amp; engineering</strong></h2>
+      <p class="muted">{{ site.name }} is led by {{ site.founder }}, trained at ISMT, CFTRI Mysore, and Chief Miller of Buhler and Indian roller flour mills. We help mill owners plan, build and run efficient plants for maida, atta, suji, chakki atta and sattu.</p>
+      <ul class="badge-checks">
+        <li>{% include "website/partials/icon.html" with name="check" %} Turnkey flour mill consultancy</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} Engineering-led flow &amp; plant design</li>
+        <li>{% include "website/partials/icon.html" with name="check" %} Hands-on commissioning &amp; support</li>
+      </ul>
+      <a href="{% url 'contact' %}" class="btn-split">Discuss Your Project <span>{% include "website/partials/icon.html" with name="arrow-ur" %}</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="section section-soft" id="industries">
+  <div class="container">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Plants we specialise in</span>
+        <h2 class="h-mixed">Expert consultancy for <strong>integrated milling plants</strong></h2>
+      </div>
+      <a href="{% url 'services' %}" class="btn-split btn-split-sm">All Services <span>{% include "website/partials/icon.html" with name="arrow-ur" %}</span></a>
+    </div>
+    <div class="ind-grid">
+      {% for i in industries %}
+      <a class="ind-card reveal" href="{% url 'services' %}#{{ i.link }}">
+        <img src="{% static i.image %}" alt="{{ i.title }}" loading="lazy"{% if i.is_photo %} class="is-photo"{% endif %}>
+        <div class="ind-overlay">
+          <h3>{{ i.title }} {% include "website/partials/icon.html" with name="arrow-ur" %}</h3>
+          <p>{{ i.desc }}</p>
+          <span class="ind-line"></span>
+        </div>
       </a>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- FOUNDER -->
+<!-- FIELD TO FLOUR (photo strip) -->
+<section class="section" id="field-to-flour">
+  <div class="container">
+    <div class="head-row reveal">
+      <div>
+        <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="wheat" %} From field to flour</span>
+        <h2 class="h-mixed">Every stage of the grain's journey, <strong>engineered right</strong></h2>
+      </div>
+      <a href="{% url 'flour_mills' %}#process" class="btn-split btn-split-sm">The Milling Process <span>{% include "website/partials/icon.html" with name="arrow-ur" %}</span></a>
+    </div>
+    <div class="ff-grid">
+      {% for p in field_to_flour %}
+      <figure class="ff-item reveal">
+        <img src="{% static p.image %}" alt="{{ p.caption }}" loading="lazy">
+        <figcaption><span class="ff-step">{{ forloop.counter|stringformat:"02d" }} · {{ p.step }}</span>{{ p.caption }}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    <p class="photo-note">Representative industry photos from Wikimedia Commons. <a href="{% url 'photo_credits' %}">Credits &amp; licences</a></p>
+  </div>
+</section>
+
+<!-- CORE SERVICES (dark) -->
+<section class="core">
+  <div class="core-left">
+    <div class="core-inner">
+      <span class="eyebrow eyebrow-plain eyebrow-dark">{% include "website/partials/icon.html" with name="gear" %} Our core services</span>
+      <h2 class="h-mixed">Advanced flour milling &amp;<br><strong>turnkey plant consultancy</strong></h2>
+      <div class="core-grid">
+        {% for c in core_services %}
+        <a class="core-card reveal{% if forloop.counter == 2 or forloop.counter == 3 %} core-card-alt{% endif %}" href="{% url 'services' %}">
+          <span class="core-icon">{% include "website/partials/icon.html" with name=c.icon %}</span>
+          <h3>{{ c.title }}</h3>
+          <p>{{ c.desc }}</p>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="core-right">
+    <img src="{% static 'website/img/industries/machine-hero.svg' %}" alt="Illustration of a rollermill on a glowing platform" loading="lazy">
+  </div>
+  <a class="spin-badge" href="{% url 'contact' %}" aria-label="Contact now">
+    <svg viewBox="0 0 120 120" class="spin-text" aria-hidden="true">
+      <defs><path id="spinCircle" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+      <text><textPath href="#spinCircle" textLength="272" lengthAdjust="spacing">CONTACT NOW • CONTACT NOW •</textPath></text>
+    </svg>
+    <span class="spin-arrow">{% include "website/partials/icon.html" with name="arrow" %}</span>
+  </a>
+</section>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} How we work</span>
+      <h2 class="h-mixed">A simple, <strong>four-step consulting process</strong></h2>
+    </div>
+    <ol class="process">
+      {% for p in process %}
+      <li class="process-step reveal">
+        <div class="process-icon">{% include "website/partials/icon.html" with name=p.icon %}<span>{{ forloop.counter }}</span></div>
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.desc }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<!-- CAREER + FOUNDER -->
 <section class="section section-tint">
-  <div class="container split">
+  <div class="container split split-top">
+    <div class="reveal">
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Career journey</span>
+      <h2 class="h-mixed">From Assistant Miller<br><strong>to Chief Miller</strong></h2>
+      <p class="muted">Running mills of increasing size and complexity across eastern India, from 150 TPD plants to a combined 400 TPD operation.</p>
+      <ol class="timeline">
+        {% for e in experience %}
+        <li class="{% if e.current %}is-current{% endif %}">
+          <span class="tl-dot"></span>
+          <div>
+            <span class="tl-meta">{{ e.position }} · {{ e.duration }}</span>
+            <strong>{{ e.company }}</strong>
+            <span class="tl-sub">{{ e.location }} · {{ e.capacity }}</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
     <aside class="founder-card reveal">
       <div class="founder-head">
         <div class="avatar" aria-hidden="true">RP</div>
@@ -98,63 +214,6 @@
       </ul>
       <a href="{% url 'about' %}" class="link-arrow">Read full profile {% include "website/partials/icon.html" with name="arrow" %}</a>
     </aside>
-    <div class="reveal">
-      <span class="eyebrow">Meet the founder</span>
-      <h2>Advice from someone who has run the mill</h2>
-      <p class="muted">{{ site.founder }} has spent his whole career on the milling floor, starting as Assistant Miller and rising to Chief Miller of large Buhler and Indian plants. Every recommendation is tested against what works on a running plant.</p>
-      <ul class="check-list">
-        <li>{% include "website/partials/icon.html" with name="check" %} Formal training at ISMT, CFTRI Mysore, a leading milling school in India</li>
-        <li>{% include "website/partials/icon.html" with name="check" %} Hands-on with both <strong>Buhler</strong> and <strong>Indian-make</strong> machinery</li>
-        <li>{% include "website/partials/icon.html" with name="check" %} Roller flour mills, chakki atta plants and sattu plants under one roof</li>
-        <li>{% include "website/partials/icon.html" with name="check" %} Worked across Assam, West Bengal and Odisha</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-<section class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">How we work</span>
-      <h2>A simple, four-step consulting process</h2>
-    </div>
-    <ol class="process">
-      {% for p in process %}
-      <li class="process-step reveal">
-        <div class="process-icon">{% include "website/partials/icon.html" with name=p.icon %}<span>{{ forloop.counter }}</span></div>
-        <h3>{{ p.title }}</h3>
-        <p>{{ p.desc }}</p>
-      </li>
-      {% endfor %}
-    </ol>
-  </div>
-</section>
-
-<!-- CAREER + MACHINE -->
-<section class="section section-dark">
-  <div class="container split">
-    <div class="reveal">
-      <span class="eyebrow eyebrow-light">Career journey</span>
-      <h2>From Assistant Miller to Chief Miller</h2>
-      <p class="muted-light">Running mills of increasing size and complexity across eastern India, from 150 TPD plants to a combined 400 TPD operation.</p>
-      <ol class="timeline timeline-dark">
-        {% for e in experience %}
-        <li class="{% if e.current %}is-current{% endif %}">
-          <span class="tl-dot"></span>
-          <div>
-            <span class="tl-meta">{{ e.position }} · {{ e.duration }}</span>
-            <strong>{{ e.company }}</strong>
-            <span class="tl-sub">{{ e.location }} · {{ e.capacity }}</span>
-          </div>
-        </li>
-        {% endfor %}
-      </ol>
-    </div>
-    <div class="machine-visual reveal">
-      <img src="{% static 'website/img/rollermill.svg' %}" alt="Illustration of a roller mill with hopper, grinding rolls and motor" width="400" height="320" loading="lazy">
-      <p class="machine-caption">The rollermill is the heart of every flour mill. Roll condition and settings decide your extraction.</p>
-    </div>
   </div>
 </section>
 
@@ -162,8 +221,8 @@
 <section class="section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Industry insight</span>
-      <h2>Flour milling in India</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Industry insight</span>
+      <h2 class="h-mixed">Flour milling <strong>in India</strong></h2>
       <p>India grows more wheat than almost any other country, yet most of it is still ground outside the organised milling sector. That leaves plenty of room for well-run modern mills.</p>
     </div>
     <div class="flow-strip reveal" aria-label="Flour milling process overview">
@@ -193,8 +252,8 @@
 <section class="section section-tint">
   <div class="container split split-top">
     <div class="reveal">
-      <span class="eyebrow">FAQ</span>
-      <h2>Questions mill owners ask us</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} FAQ</span>
+      <h2 class="h-mixed">Questions <strong>mill owners ask us</strong></h2>
       <p class="muted">Can't find your answer? Call or WhatsApp us. We're happy to talk through your project.</p>
       <a href="{% url 'services' %}#faq" class="link-arrow">See all questions {% include "website/partials/icon.html" with name="arrow" %}</a>
     </div>

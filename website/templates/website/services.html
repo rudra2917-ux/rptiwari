@@ -5,34 +5,38 @@
 {% block meta_description %}Flour mill consultancy services: new plant setup, mill flow design, erection and commissioning, performance improvement, chakki and sattu plants, and staff training.{% endblock %}
 
 {% block content %}
-<section class="page-hero page-hero-art">
-  <div class="container page-hero-grid">
-    <div>
-      <span class="eyebrow eyebrow-light">Our Services</span>
-      <h1>Everything your flour mill needs, from one expert</h1>
-      <p class="lead">Whether you are starting from an empty plot or running a mill that isn't hitting its numbers, we cover the full lifecycle of your plant.</p>
-      <nav class="pill-nav" aria-label="Services">
-        {% for s in services %}<a href="#{{ s.slug }}">{{ s.title }}</a>{% endfor %}
-      </nav>
-    </div>
-    <img class="page-hero-img" src="{% static 'website/img/rollermill.svg' %}" alt="" width="400" height="320">
+<section class="page-hero" style="--hero-img: url('{% static 'website/img/industries/milling-section.jpg' %}')">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Services</span></nav>
+    <span class="eyebrow eyebrow-light">Our Services</span>
+    <h1>Everything your flour mill needs, from one expert</h1>
+    <p class="lead">Whether you are starting from an empty plot or running a mill that isn't hitting its numbers, we cover the full lifecycle of your plant.</p>
+    <nav class="pill-nav" aria-label="Services">
+      {% for s in services %}<a href="#{{ s.slug }}">{{ s.title }}</a>{% endfor %}
+    </nav>
   </div>
+  <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 C240 10 480 10 720 45 C960 80 1200 80 1440 40 L1440 90 L0 90Z" fill="#fff"/></svg>
 </section>
 
 <section class="section">
   <div class="container service-detail-list">
     {% for s in services %}
     <article class="service-detail reveal" id="{{ s.slug }}">
-      <div class="sd-icon">{% include "website/partials/icon.html" with name=s.icon %}<span class="sd-num">0{{ forloop.counter }}</span></div>
+      <div class="sd-media">
+        <img src="{% static s.photo %}" alt="" loading="lazy">
+        <span class="sd-icon">{% include "website/partials/icon.html" with name=s.icon %}</span>
+        <span class="sd-num">0{{ forloop.counter }}</span>
+      </div>
       <div class="sd-body">
         <h2>{{ s.title }}</h2>
         <p>{{ s.desc }}</p>
         <ul class="sd-points">
           {% for p in s.points %}<li>{% include "website/partials/icon.html" with name="check" %} {{ p }}</li>{% endfor %}
         </ul>
-      </div>
-      <div class="sd-cta">
-        <a href="{% url 'contact' %}?service={{ s.slug }}" class="btn btn-outline btn-sm">Enquire {% include "website/partials/icon.html" with name="arrow" %}</a>
+        <div class="sd-cta">
+          <a href="{% url 'contact' %}?service={{ s.slug }}" class="btn btn-primary btn-sm">Enquire about this {% include "website/partials/icon.html" with name="arrow" %}</a>
+          <a href="tel:{{ site.phone_raw }}" class="link-arrow">{% include "website/partials/icon.html" with name="phone" %} Call to discuss</a>
+        </div>
       </div>
     </article>
     {% endfor %}
@@ -42,8 +46,8 @@
 <section class="section section-tint">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">How we work</span>
-      <h2>Our consulting process</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} How we work</span>
+      <h2 class="h-mixed">Our <strong>consulting process</strong></h2>
     </div>
     <ol class="process">
       {% for p in process %}
@@ -60,8 +64,8 @@
 <section class="section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Expertise</span>
-      <h2>Plants &amp; systems we know inside out</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Expertise</span>
+      <h2 class="h-mixed">Plants &amp; systems we know <strong>inside out</strong></h2>
     </div>
     <div class="chip-row chip-row-center reveal">
       {% for e in expertise %}<span class="chip chip-lg">{% include "website/partials/icon.html" with name="wheat" %} {{ e }}</span>{% endfor %}
@@ -72,8 +76,8 @@
 <section class="section section-tint" id="faq">
   <div class="container split split-top">
     <div class="reveal">
-      <span class="eyebrow">FAQ</span>
-      <h2>Frequently asked questions</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} FAQ</span>
+      <h2 class="h-mixed">Frequently asked <strong>questions</strong></h2>
       <p class="muted">Still have a question? We're one call away.</p>
       <a href="tel:{{ site.phone_raw }}" class="btn btn-primary">{% include "website/partials/icon.html" with name="phone" %} {{ site.phone_display }}</a>
     </div>

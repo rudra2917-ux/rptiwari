@@ -3,6 +3,7 @@
 SERVICES = [
     {
         'slug': 'new_plant',
+        'photo': 'website/img/industries/flour-mill.jpg',
         'icon': 'factory',
         'title': 'New Flour Mill Project Setup',
         'desc': 'End-to-end consultancy for new roller flour mills: feasibility, plant layout, building '
@@ -11,6 +12,7 @@ SERVICES = [
     },
     {
         'slug': 'flow_design',
+        'photo': 'website/img/industries/milling-section.jpg',
         'icon': 'flow',
         'title': 'Mill Flow Sheet & Design',
         'desc': 'Practical flow diagrams for cleaning, conditioning, break, purification and reduction '
@@ -19,6 +21,7 @@ SERVICES = [
     },
     {
         'slug': 'commissioning',
+        'photo': 'website/img/industries/plc-automation.jpg',
         'icon': 'wrench',
         'title': 'Erection & Commissioning',
         'desc': 'On-site supervision of machinery erection, trial runs and commissioning for both '
@@ -27,6 +30,7 @@ SERVICES = [
     },
     {
         'slug': 'performance',
+        'photo': 'website/img/industries/plansifter.jpg',
         'icon': 'trend',
         'title': 'Mill Performance Improvement',
         'desc': 'Mill audits that find losses in extraction, power and capacity, then fix roll settings, '
@@ -35,6 +39,7 @@ SERVICES = [
     },
     {
         'slug': 'chakki_sattu',
+        'photo': 'website/img/industries/chakki-plant.jpg',
         'icon': 'wheat',
         'title': 'Chakki Atta & Sattu Plants',
         'desc': 'Planning and running chakki atta plants, sattu plants and allied units alongside your '
@@ -43,6 +48,7 @@ SERVICES = [
     },
     {
         'slug': 'training',
+        'photo': 'website/img/photos/atta.jpg',
         'icon': 'users',
         'title': 'Quality Control & Staff Training',
         'desc': 'Wheat and flour quality practices, lab routines, and hands-on training for millers, '
@@ -205,4 +211,60 @@ CALC_DEFAULTS = [
     {'key': 'atta', 'label': 'Atta (resultant)', 'pct': 10},
     {'key': 'bran', 'label': 'Bran (chokar)', 'pct': 23},
     {'key': 'loss', 'label': 'Invisible loss', 'pct': 1},
+]
+
+# Plants & sections shown as image cards on the home page.
+# To use a real photo instead of the illustration, save it as
+# static/website/img/industries/<slug>.jpg (or .png / .webp).
+INDUSTRIES = [
+    {'slug': 'flour-mill', 'title': 'Roller Flour Mill', 'desc': 'Complete wheat milling plants', 'link': 'new_plant'},
+    {'slug': 'chakki-plant', 'title': 'Chakki Atta Plant', 'desc': 'Stone-ground atta at scale', 'link': 'chakki_sattu'},
+    {'slug': 'sattu-plant', 'title': 'Sattu Plant', 'desc': 'Roasting & grinding lines', 'link': 'chakki_sattu'},
+    {'slug': 'grain-storage', 'title': 'Grain Handling & Storage', 'desc': 'Silos, intake & conveying', 'link': 'new_plant'},
+    {'slug': 'cleaning-section', 'title': 'Wheat Cleaning Section', 'desc': 'Separators, destoners, scourers', 'link': 'flow_design'},
+    {'slug': 'milling-section', 'title': 'Milling Section', 'desc': 'Rollermills & roll management', 'link': 'performance'},
+    {'slug': 'plansifter', 'title': 'Sifting & Purification', 'desc': 'Plansifters & purifiers', 'link': 'flow_design'},
+    {'slug': 'plc-automation', 'title': 'PLC Automation', 'desc': 'Controlled, efficient operation', 'link': 'commissioning'},
+]
+
+CORE_SERVICES = [
+    {'icon': 'bulb', 'title': 'Turnkey Consultancy', 'desc': 'Complete flour mill projects, from first idea to commissioning.'},
+    {'icon': 'users', 'title': 'Engineering & Flow Design', 'desc': 'Process flow, plant layout and machinery selection.'},
+    {'icon': 'sliders', 'title': 'Plant Automation', 'desc': 'PLC-controlled operation for steady, efficient milling.'},
+    {'icon': 'headset', 'title': 'After-Commissioning Support', 'desc': 'Mill audits, troubleshooting and staff training.'},
+]
+
+
+# "From field to flour" photo strip on the home page (files in static/website/img/photos/).
+FIELD_TO_FLOUR = [
+    {'image': 'website/img/photos/wheat-harvest-mp.jpg', 'step': 'Harvest', 'caption': 'Wheat harvest, Madhya Pradesh'},
+    {'image': 'website/img/photos/wheat-ears.jpg', 'step': 'Raw material', 'caption': 'Ripe wheat ears'},
+    {'image': 'website/img/photos/cleaning-grain.jpg', 'step': 'Pre-cleaning', 'caption': 'Winnowing grain by hand'},
+    {'image': 'website/img/photos/seed-cleaning-plant.jpg', 'step': 'Cleaning plant', 'caption': 'Aspiration & cyclones'},
+    {'image': 'website/img/photos/roller-mill.jpg', 'step': 'Milling', 'caption': 'Buhler-system rollermill'},
+    {'image': 'website/img/photos/historic-mill-interior.jpg', 'step': 'Heritage', 'caption': 'Roller mill floor, early 1900s'},
+    {'image': 'website/img/photos/atta.jpg', 'step': 'Finished product', 'caption': 'Whole wheat atta'},
+    {'image': 'website/img/photos/ambala-flour-mill.jpg', 'step': 'India', 'caption': 'Banarsi Dass Flour Mill, Ambala'},
+]
+
+# Third-party photos used on the site. Licences require this attribution (shown on /photo-credits/).
+PHOTO_CREDITS = [
+    {'image': 'website/img/industries/flour-mill.jpg', 'label': 'Roller flour mill, Katanning', 'author': 'Calistemon', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Katanning_Roller_Flour_Mill,_April_2021_01.jpg'},
+    {'image': 'website/img/industries/chakki-plant.jpg', 'label': 'Chakki mill in operation, India', 'author': 'Surya Prakash.S.A.', 'license': 'CC BY-SA 3.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/3.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Flour_mill2.JPG'},
+    {'image': 'website/img/industries/sattu-plant.jpg', 'label': 'Sattu stall, Howrah, West Bengal', 'author': 'Billjones94', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:A_Sattu_(Chatu)_seller_in_Bally,_Howrah,_West_Bengal.jpg'},
+    {'image': 'website/img/industries/grain-storage.jpg', 'label': 'Grain silos and elevator (also home page header)', 'author': 'TheTechnician27', 'license': 'CC0', 'license_url': 'https://creativecommons.org/publicdomain/zero/1.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Gifford,_IL_silo_and_grain_elevator.jpg'},
+    {'image': 'website/img/industries/cleaning-section.jpg', 'label': 'Indented-cylinder trieur battery', 'author': 'BMK', 'license': 'CC BY-SA 3.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/3.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Trieurbatterie_BMK.jpg'},
+    {'image': 'website/img/industries/milling-section.jpg', 'label': 'Rollermill floor spouting', 'author': 'BMK', 'license': 'CC BY-SA 3.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/3.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Rohrleitungen_BMK.jpg'},
+    {'image': 'website/img/industries/plansifter.jpg', 'label': 'Plansifters', 'author': 'Martin Krijger', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Plansifters.jpg'},
+    {'image': 'website/img/industries/plc-automation.jpg', 'label': 'PLC control cabinet', 'author': 'Elmschrat Coaching-Blog', 'license': 'CC BY-SA 3.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/3.0/', 'source': 'https://commons.wikimedia.org/wiki/File:BMA_Automation_Allen_Bradley_PLC_3.JPG'},
+    {'image': 'website/img/photos/roller-mill.jpg', 'label': 'Buhler-system rollermill', 'author': 'MiguelAlanCS', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Molino_de_cilindros_-_Sistema_Buhler_(F%C3%A1brica_de_harinas_La_Perla_2018).jpg'},
+    {'image': 'website/img/photos/plc-panel.jpg', 'label': 'Mill PLC operator panel', 'author': 'Quist161', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:PLC_displej.jpg'},
+    {'image': 'website/img/photos/wheat-harvest-mp.jpg', 'label': 'Wheat harvest, Madhya Pradesh', 'author': 'Yann', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Wheat_harvest,_Raisen_district,_Madhya_Pradesh,_India.jpg'},
+    {'image': 'website/img/photos/wheat-ears.jpg', 'label': 'Ripe wheat ears', 'author': 'Bluemoose', 'license': 'CC BY-SA 3.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/3.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Wheat_close-up.JPG'},
+    {'image': 'website/img/photos/punjab-wheat-field.jpg', 'label': 'Wheat crop before harvest, Punjab', 'author': 'Harvinder Chandigarh', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:A_view_of_landscape_pre_with_harvest_wheat_crop_in_Punjab.jpg'},
+    {'image': 'website/img/photos/cleaning-grain.jpg', 'label': 'Winnowing grain by hand', 'author': 'Subrohit', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:The_Cleaning_Of_Food_Grains.jpg'},
+    {'image': 'website/img/photos/seed-cleaning-plant.jpg', 'label': 'Grain cleaning plant with cyclones', 'author': 'Bernard Spragg. NZ from Christchurch, New Zealand', 'license': 'CC0', 'license_url': 'https://creativecommons.org/publicdomain/zero/1.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Okotoks_Seed_Cleaning_Association_(9623882931).jpg'},
+    {'image': 'website/img/photos/historic-mill-interior.jpg', 'label': 'Historic roller mill interior', 'author': 'State Government Photographer', 'license': 'CC0', 'license_url': 'https://creativecommons.org/publicdomain/zero/1.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Interior_of_Flour_Mill,_Port_Adelaide(GN02254).jpg'},
+    {'image': 'website/img/photos/atta.jpg', 'label': 'Whole wheat atta', 'author': 'Nga Ahorangi', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Atta_flour.jpg'},
+    {'image': 'website/img/photos/ambala-flour-mill.jpg', 'label': 'Banarsi Dass Flour Mill, Ambala (historic postcard)', 'author': 'Paper Jewels', 'license': 'CC BY 4.0', 'license_url': 'https://creativecommons.org/licenses/by/4.0/', 'source': 'https://commons.wikimedia.org/wiki/File:Flour-mill_0.jpg'},
 ]

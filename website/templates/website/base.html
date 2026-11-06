@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="{% static 'website/img/logo.svg' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
 </head>
 <body>
@@ -88,12 +88,13 @@
         <ul class="footer-contact">
           <li>{% include "website/partials/icon.html" with name="phone" %}<a href="tel:{{ site.phone_raw }}">{{ site.phone_display }}</a></li>
           <li>{% include "website/partials/icon.html" with name="mail" %}<a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li>{% include "website/partials/icon.html" with name="mail" %}<a href="mailto:{{ site.email_ceo }}">{{ site.email_ceo }}</a></li>
           <li>{% include "website/partials/icon.html" with name="pin" %}<span>{{ site.address }}</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="container">© <span id="year"></span> {{ site.name }}. All rights reserved.</div>
+      <div class="container">© <span id="year"></span> {{ site.name }}. All rights reserved. <span class="footer-sep">·</span> <a href="{% url 'photo_credits' %}">Photo credits</a></div>
     </div>
   </footer>
 

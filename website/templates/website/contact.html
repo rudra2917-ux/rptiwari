@@ -1,14 +1,17 @@
 {% extends "website/base.html" %}
+{% load static %}
 
 {% block title %}Contact Us | {{ site.name }}{% endblock %}
 
 {% block content %}
-<section class="page-hero">
+<section class="page-hero" style="--hero-img: url('{% static 'website/img/photos/punjab-wheat-field.jpg' %}')">
   <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Contact Us</span></nav>
     <span class="eyebrow eyebrow-light">Contact Us</span>
     <h1>Let's talk about your flour mill</h1>
     <p class="lead">New project, upgrade or a production problem: send us the details and {{ site.founder }} will get back to you.</p>
   </div>
+  <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 C240 10 480 10 720 45 C960 80 1200 80 1440 40 L1440 90 L0 90Z" fill="#fff"/></svg>
 </section>
 
 <section class="section">
@@ -24,7 +27,11 @@
       </a>
       <a class="contact-card reveal" href="mailto:{{ site.email }}">
         <div class="icon-badge">{% include "website/partials/icon.html" with name="mail" %}</div>
-        <div><span class="label">Email</span><strong>{{ site.email }}</strong></div>
+        <div><span class="label">Email · Enquiries &amp; support</span><strong>{{ site.email }}</strong></div>
+      </a>
+      <a class="contact-card reveal" href="mailto:{{ site.email_ceo }}">
+        <div class="icon-badge">{% include "website/partials/icon.html" with name="mail" %}</div>
+        <div><span class="label">Email · {{ site.founder }}, CEO</span><strong>{{ site.email_ceo }}</strong></div>
       </a>
       <div class="contact-card reveal">
         <div class="icon-badge">{% include "website/partials/icon.html" with name="pin" %}</div>
@@ -41,7 +48,7 @@
     </div>
 
     <div class="form-card reveal">
-      <h2>Send an enquiry</h2>
+      <h2 class="h-mixed">Send an <strong>enquiry</strong></h2>
       <p class="muted">Fields marked * are required.</p>
 
       {% if messages %}

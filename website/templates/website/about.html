@@ -4,23 +4,22 @@
 {% block title %}About Us | {{ site.name }}{% endblock %}
 
 {% block content %}
-<section class="page-hero page-hero-art">
-  <div class="container page-hero-grid">
-    <div>
-      <span class="eyebrow eyebrow-light">About Us</span>
-      <h1>Experience you can build a mill on</h1>
-      <p class="lead">R.P. Consultant &amp; Engineers (RPCE) is a flour milling consultancy founded by {{ site.founder }}, a Technical Consultant with {{ site.experience_years }} years in the industry.</p>
-    </div>
-    <img class="page-hero-img" src="{% static 'website/img/mill-scene.svg' %}" alt="" width="600" height="440">
+<section class="page-hero" style="--hero-img: url('{% static 'website/img/industries/flour-mill.jpg' %}')">
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Home</a><span aria-hidden="true">/</span><span aria-current="page">About Us</span></nav>
+    <span class="eyebrow eyebrow-light">About Us</span>
+    <h1>Experience you can build a mill on</h1>
+    <p class="lead">R.P. Consultant &amp; Engineers (RPCE) is a flour milling consultancy founded by {{ site.founder }}, a Technical Consultant with {{ site.experience_years }} years in the industry.</p>
   </div>
+  <svg class="hero-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 C240 10 480 10 720 45 C960 80 1200 80 1440 40 L1440 90 L0 90Z" fill="#fff"/></svg>
 </section>
 
 <!-- COMPANY -->
 <section class="section">
   <div class="container split">
     <div class="reveal">
-      <span class="eyebrow">Who we are</span>
-      <h2>R.P. Consultant &amp; Engineers</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Who we are</span>
+      <h2 class="h-mixed">R.P. Consultant<br><strong>&amp; Engineers</strong></h2>
       <p>RPCE is a <strong>flour milling consultancy</strong>{% if site.established %} established in {{ site.established }}{% endif %}. We help entrepreneurs, investors and existing mill owners plan, set up, commission and run roller flour mills, chakki atta plants and allied units such as sattu plants.</p>
       <p>Our approach is practical. Every recommendation comes from years of running mills: managing shifts, setting rolls, balancing flow sheets and meeting production targets on Buhler and Indian-make machinery.</p>
       <p>Our goal is simple: <strong>higher extraction, consistent flour quality and lower running costs</strong> for every mill we work with.</p>
@@ -60,11 +59,11 @@
           <span class="badge">C.F.T.R.I. Mysore</span>
         </div>
         <a href="tel:{{ site.phone_raw }}" class="btn btn-primary btn-block">{% include "website/partials/icon.html" with name="phone" %} {{ site.phone_display }}</a>
-        <a href="mailto:{{ site.email }}" class="btn btn-outline btn-block">{% include "website/partials/icon.html" with name="mail" %} Email</a>
+        <a href="mailto:{{ site.email_ceo }}" class="btn btn-outline btn-block" title="{{ site.email_ceo }}">{% include "website/partials/icon.html" with name="mail" %} Email {{ site.founder }}</a>
       </div>
       <div class="founder-main">
-        <span class="eyebrow">Meet the founder</span>
-        <h2>{{ site.founder }}</h2>
+        <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Meet the founder</span>
+        <h2 class="h-mixed"><strong>{{ site.founder }}</strong></h2>
         <p>{{ site.founder }} trained in flour milling at the <strong>International School of Milling Technology (ISMT)</strong> at the <strong>Central Food Technological Research Institute (CFTRI), Mysore</strong>, and earned the Certificate in Flour Milling Technology (1999–2000). During training he won <strong>1st prize</strong> for plant training at Brindavan Roller Flour Mills Ltd., Mysore.</p>
         <p>He started as an Assistant Miller and rose to <strong>Chief Miller</strong>. Since November 2016 he has led a 200 TPD Buhler mill and a 200 TPD Indian mill at Eastern Foods Pvt. Ltd., Cuttack. He is known for motivated leadership, strong communication with teams on the floor, and working well both independently and with others.</p>
 
@@ -98,13 +97,13 @@
       {% include "website/partials/logo.html" with uid="about" large=True %}
     </div>
     <div>
-      <span class="eyebrow">Our identity</span>
-      <h2>What our logo stands for</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Our identity</span>
+      <h2 class="h-mixed">What our logo <strong>stands for</strong></h2>
       <ul class="brand-meaning">
         <li><span class="bm-dot"></span><div><strong>The gear</strong><span>Engineering: machinery, erection and the mechanics of a running plant.</span></div></li>
-        <li><span class="bm-dot"></span><div><strong>The wheat ear</strong><span>Flour milling: the grain at the centre of everything we do.</span></div></li>
-        <li><span class="bm-dot"></span><div><strong>RP</strong><span>Our founder, {{ site.founder }}, who stands behind every piece of advice.</span></div></li>
-        <li><span class="bm-dot"></span><div><strong>Red &amp; white</strong><span>Energy and commitment, with the purity of good white flour.</span></div></li>
+        <li><span class="bm-dot"></span><div><strong>The golden wheat ear</strong><span>Flour milling: the grain at the centre of everything we do, ripe and ready for the mill.</span></div></li>
+        <li><span class="bm-dot"></span><div><strong>The RP ribbon</strong><span>Our founder, {{ site.founder }}, who puts his name to every piece of advice.</span></div></li>
+        <li><span class="bm-dot"></span><div><strong>Red, white &amp; gold</strong><span>Energy and commitment, the purity of good white flour, and the colour of ripe wheat.</span></div></li>
       </ul>
       <div class="btn-row-left">
         <a href="{% static 'website/img/logo-full.svg' %}" download class="btn btn-outline btn-sm">Download logo</a>
@@ -118,8 +117,8 @@
 <section class="section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Professional experience</span>
-      <h2>{{ site.experience_years }} years in the flour milling sector</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Professional experience</span>
+      <h2 class="h-mixed"><strong>{{ site.experience_years }} years</strong> in the flour milling sector</h2>
       <p>A career spent running mills of increasing size and complexity across eastern India.</p>
     </div>
     <div class="table-wrap reveal">
@@ -146,8 +145,8 @@
 <section class="section section-tint">
   <div class="container split">
     <div class="reveal">
-      <span class="eyebrow">Industry exposure</span>
-      <h2>Training trips</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Industry exposure</span>
+      <h2 class="h-mixed">Industry <strong>training trips</strong></h2>
       <p class="muted">As part of the CFTRI programme, he made study visits to leading food processing and milling machinery companies.</p>
     </div>
     <ul class="trip-list reveal">
@@ -162,8 +161,8 @@
 <section class="section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Our commitment</span>
-      <h2>How we work</h2>
+      <span class="eyebrow eyebrow-plain">{% include "website/partials/icon.html" with name="gear" %} Our commitment</span>
+      <h2 class="h-mixed">How <strong>we work</strong></h2>
     </div>
     <div class="card-grid card-grid-3">
       <article class="service-card reveal">

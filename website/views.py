@@ -22,6 +22,22 @@ def gallery_images():
     return photos
 
 
+INDUSTRY_DIR = Path(__file__).resolve().parent / 'static' / 'website' / 'img' / 'industries'
+
+
+def industries():
+    """Use a real photo for a card when one exists, otherwise the SVG illustration."""
+    items = []
+    for item in data.INDUSTRIES:
+        image = f"website/img/industries/{item['slug']}.svg"
+        for ext in ('.jpg', '.jpeg', '.png', '.webp'):
+            if (INDUSTRY_DIR / f"{item['slug']}{ext}").exists():
+                image = f"website/img/industries/{item['slug']}{ext}"
+                break
+        items.append({**item, 'image': image, 'is_photo': not image.endswith('.svg')})
+    return items
+
+
 def home(request):
     return render(request, 'website/home.html', {
         'services': data.SERVICES,
@@ -33,6 +49,9 @@ def home(request):
         'flow_strip': data.FLOW_STRIP,
         'faqs': data.FAQS[:4],
         'gallery': gallery_images()[:6],
+        'industries': industries(),
+        'field_to_flour': data.FIELD_TO_FLOUR,
+        'core_services': data.CORE_SERVICES,
         'active': 'home',
     })
 
@@ -72,6 +91,10 @@ def flour_mills(request):
         'calc_defaults': data.CALC_DEFAULTS,
         'active': 'flour_mills',
     })
+
+
+def photo_credits(request):
+    return render(request, 'website/photo_credits.html', {'credits': data.PHOTO_CREDITS})
 
 
 def contact(request):

@@ -10,8 +10,11 @@ SITE = {
     'phone_display': '+91 88877 08386',
     'phone_raw': '+918887708386',
     'whatsapp': '918887708386',
-    'email': 'rptiwari755@gmail.com',
-    'address': 'Hanuman Mandir, Ajat Nagar, Badatpur, Varanasi, Uttar Pradesh',
+    # General enquiries and support (top bar, footer, contact page).
+    'email': 'support@rpconsultant.online',
+    # Founder / CEO direct line (founder card on About, footer, contact page).
+    'email_ceo': 'ceo@rpconsultant.online',
+    'address': 'NH-31, Near Hanuman Mandir, Ajat Nagar, Badatpur, Varanasi, Uttar Pradesh 221105',
     'city': 'Varanasi, Uttar Pradesh',
     'experience_years': '24+',
     # Year the firm was established. Leave blank to hide it on the site.
